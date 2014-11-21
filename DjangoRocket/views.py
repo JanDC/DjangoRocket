@@ -1,30 +1,27 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-import Rocket
+from Rocket import Rocket
 
 def home(request):
-    Rocket()
     template = loader.get_template('home.html')
     context = RequestContext(request, {})
     return HttpResponse(template._render(context))
 
 def move(request):
     rocket = Rocket()
-    direction=  request.REQUEST['direction']
-    magnitude=request.REQUEST['magnitude']
+    direction= request.GET['direction']
+    magnitude= float(request.GET['magnitude'])
     if direction == 'LEFT':
-        rocket.send_cmd(rocket.LEFT,magnitude)
+        rocket.send_move(rocket.LEFT,magnitude)
     if direction == 'RIGHT':
-        rocket.send_cmd(rocket.RIGHT,magnitude)
+        rocket.send_move(rocket.RIGHT,magnitude)
     if direction == 'UP':
-        rocket.send_cmd(rocket.UP,magnitude)
+        rocket.send_move(rocket.UP,magnitude)
     if direction == 'DOWN':
-        rocket.send_cmd(rocket.DOWN,magnitude)
-    return HttpResponse("Moved " + direction + " by "+ magnitude)
+        rocket.send_move(rocket.DOWN,magnitude)
+    return HttpResponse("Moved " + direction + " by "+ magnitude.__str__())
 def fire(request):
     rocket = Rocket()
-    noOfTimes=  request.REQUEST['amount']
-    for i, name in noOfTimes:
-        rocket.send_cmd(rocket.FIRE)
-    return HttpResponse("Fired "+ noOfTimes +" rocket"+ (noOfTimes>1?"s":""))
+    rocket.send_cmd(rocket.FIRE)
+    return HttpResponse("Fired rocket")
 

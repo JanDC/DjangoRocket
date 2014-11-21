@@ -1,5 +1,6 @@
 import platform
 import time
+
 import usb.core
 import usb.util
 

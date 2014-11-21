@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^blog/', include('blog.urls')),
 
-    # url(r'^admin/', include(admin.site.urls)),
+     url(r'^fire/', 'DjangoRocket.views.fire', name='fire'),
+     url(r'^move/', 'DjangoRocket.views.move', name='move'),
      url(r'^$', 'DjangoRocket.views.home', name='home'),
 )
