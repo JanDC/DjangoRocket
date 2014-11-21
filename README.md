@@ -10,5 +10,6 @@ Dependencies:
 <ul>
 <li>python-django</li>
 <li>pyusb</li>
-<li>chrome(for gamepad support)</li>
+<li>chrome (for gamepad support)</li>
+<li>pygame (for webcam support)</li>
 </ul>
