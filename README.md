@@ -7,6 +7,8 @@ https://github.com/riklaunim/armageddon-usb-missile-launcher
 
 
 Dependencies:
--python-django
--pyusb
--chrome(for gamepad support)
+<ul>
+<li>python-django</li>
+<li>pyusb</li>
+<li>chrome(for gamepad support)</li>
+</ul>
