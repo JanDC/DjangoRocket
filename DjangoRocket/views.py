@@ -1,10 +1,14 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from Rocket import Rocket
+from Webcam import Webcam
 
 def home(request):
+    webcam = Webcam()
+    webcam.startCamera()
+    image = webcam.getImage()
     template = loader.get_template('home.html')
-    context = RequestContext(request, {})
+    context = RequestContext(request, {'image': str(image)})
     return HttpResponse(template._render(context))
 
 def move(request):
