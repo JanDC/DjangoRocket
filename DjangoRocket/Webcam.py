@@ -1,13 +1,16 @@
-from pygame import camera
-
-devicePath='/dev/video2'
-
+import pygame, sys
+from pygame.locals import *
+import pygame.camera
+pygame.init()
+pygame.camera.init()
 class Webcam():
     def __init__(self):
-        camera.init()
-        self.camera = camera.Camera(devicePath)
+        devicePath='/dev/video2'
 
+        cam = pygame.camera.Camera(devicePath)
+        cam.start()
     def startCamera(self):
-        self.camera.start()
+        self.cam.start()
     def getImage(self):
-        return self.camera.get_raw
+        return self.cam.get_raw()
+

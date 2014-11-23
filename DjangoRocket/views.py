@@ -4,11 +4,10 @@ from Rocket import Rocket
 from Webcam import Webcam
 
 def home(request):
-    webcam = Webcam()
-    webcam.startCamera()
-    image = webcam.getImage()
+    # webcam = Webcam()
+    # image = webcam.getImage()
     template = loader.get_template('home.html')
-    context = RequestContext(request, {'image': str(image)})
+    context = RequestContext(request, {'image': 'sdfsdf'})
     return HttpResponse(template._render(context))
 
 def move(request):
@@ -28,4 +27,14 @@ def fire(request):
     rocket = Rocket()
     rocket.send_cmd(rocket.FIRE)
     return HttpResponse("Fired rocket")
+def abort(request):
+    rocket = Rocket()
+    rocket.send_cmd(rocket.STOP)
+    return HttpResponse("Aborted current command")
+def loadUp(request):
+    rocket = Rocket()
+    duration=float(request.GET["duration"])
+    rocket.send_move(rocket.FIRE,duration)
+    return HttpResponse("Loaded for "+ str(duration) + " ms")
+
 

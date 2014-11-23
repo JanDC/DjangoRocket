@@ -13,6 +13,7 @@ class Rocket(object):
     RIGHT = 0x08
     FIRE = 0x10
     STOP = 0x20
+    LASER = 0x20
 
     DEVICE_ORIGINAL = 'Original'
     DEVICE_THUNDER = 'Thunder'

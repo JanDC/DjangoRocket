@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1>DjangoRocket launch page</h1>
+
 <div id="gamepadPrompt"></div>
 <p>
 <table>
@@ -28,7 +29,8 @@
 </p>
 <p>
     <input type="button" id="btn_fire" value="FIRE"/><br>
-    <input type="button" id="btn_laser" value="TOGGLE LASER"/>
+    <input type="button" id="btn_load" value="Build up pressure"/>
+    <input type="button" id="btn_abort" value="ABORT!!!!!!"/>
 </p>
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -48,11 +50,72 @@
             });
         }
     }
+    function toggleLaser() {
+        $.get('/laser', function (returndata) {
+            console.log(returndata);
+        });
+    }
+    function abortAction() {
+        $.get('/abort', function (returndata) {
+            console.log(returndata);
+        });
+    }
+    function loadUp(duration) {
+        $.get('/load', {'duration': duration}, function (returndata) {
+            console.log(returndata);
+        });
+    }
+
+
+</script>
+<script>
+    var duration = 50;//in ms: move duration + cooldown period
+    var lastShot = 0;
+    //Button controls
     $('.btn_move').click(function () {
         moveTurret(this.value, 10);
     });
     $('#btn_fire').click(function () {
         fireTurret(1);
+    });
+    $('#btn_abort').click(function () {
+        abortAction();
+    });
+    $('#btn_load').click(function () {
+        loadUp(100);
+    });
+    //Keyboard controls
+    $(document).keypress(function (event) {
+        event.preventDefault;
+        if (event.timeStamp > (lastShot + duration)) {
+            lastShot = event.timeStamp;
+            //let the turret cool down
+
+            switch (event.keyCode) {
+                case 32:
+                    fireTurret(1);
+                    break;
+                case 115:
+                    moveTurret("DOWN", duration);
+                    break;
+
+                case 119:
+                    moveTurret("UP", duration);
+                    break;
+                case 97:
+                    moveTurret("LEFT", duration);
+                    break;
+
+                case 100:
+                    moveTurret("RIGHT", duration);
+                    break;
+
+                default :
+                    console.log(event.keyCode);
+                    break;
+
+            }
+        }
     });
 </script>
 <script>
@@ -65,6 +128,7 @@
     }
 
     function gamepadControls() {
+        var duration = 100;
         var gp = navigator.getGamepads()[0];
 
 
@@ -84,24 +148,24 @@
             var Y = gp.axes[i + 1];
             if (X == -1) {
                 console.log('LEFT');
-                moveTurret('LEFT', 10);
+                moveTurret('LEFT', duration);
             }
             if (X == 1) {
                 console.log('RIGHT');
-                moveTurret('RIGHT', 10);
+                moveTurret('RIGHT', duration);
             }
             if (Y == -1) {
-                moveTurret('UP', 10);
+                moveTurret('UP', duration);
                 console.log('UP');
             }
             if (Y == 1) {
-                moveTurret('DOWN', 10);
+                moveTurret('DOWN', duration);
                 console.log('DOWN');
             }
         }
     }
-
     $(document).ready(function () {
+        var interval = 100;
 
         if (canGame()) {
 
@@ -112,7 +176,7 @@
                 hasGP = true;
                 $("#gamepadPrompt").html("Gamepad connected!");
                 console.log("connection event");
-                repGP = window.setInterval(gamepadControls, 100);
+                repGP = window.setInterval(gamepadControls, interval);
             });
 
             $(window).on("gamepaddisconnected", function () {
@@ -128,9 +192,10 @@
                     if (!hasGP) $(window).trigger("gamepadconnected");
                     window.clearInterval(checkGP);
                 }
-            }, 500);
+            }, interval);
         }
 
     });
+
 </script>
 </html>

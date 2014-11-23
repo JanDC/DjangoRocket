@@ -9,5 +9,7 @@ urlpatterns = patterns('',
 
      url(r'^fire/', 'DjangoRocket.views.fire', name='fire'),
      url(r'^move/', 'DjangoRocket.views.move', name='move'),
+     url(r'^abort/', 'DjangoRocket.views.abort', name='abort'),
+     url(r'^load/', 'DjangoRocket.views.loadUp', name='load'),
      url(r'^$', 'DjangoRocket.views.home', name='home'),
 )
