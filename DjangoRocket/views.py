@@ -4,8 +4,6 @@ from Rocket import Rocket
 from Webcam import Webcam
 
 def home(request):
-    # webcam = Webcam()
-    # image = webcam.getImage()
     template = loader.get_template('home.html')
     context = RequestContext(request, {'image': 'sdfsdf'})
     return HttpResponse(template._render(context))
@@ -35,6 +33,6 @@ def loadUp(request):
     rocket = Rocket()
     duration=float(request.GET["duration"])
     rocket.send_move(rocket.FIRE,duration)
-    return HttpResponse("Loaded for "+ str(duration) + " ms")
+    return HttpResponse("Loaded for "+ duration.__str__()+ " ms")
 
 
