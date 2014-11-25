@@ -1,5 +1,6 @@
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseNotFound
 from django.template import RequestContext, loader
+from django.conf import settings
 from Rocket import Rocket
 from Webcam import Webcam
 
@@ -34,5 +35,22 @@ def loadUp(request):
     duration=float(request.GET["duration"])
     rocket.send_move(rocket.FIRE,duration)
     return HttpResponse("Loaded for "+ duration.__str__()+ " ms")
-
+def files(request):
+    import os.path
+    import mimetypes
+    mimetypes.init()
+    file_url = 'flowplayer-3.2.18.swf'
+    try:
+        file_path = 'files/' + file_url
+        fsock = open(file_path,"r")
+        #file = fsock.read()
+        #fsock = open(file_path,"r").read()
+        file_name = os.path.basename(file_path)
+        file_size = os.path.getsize(file_path)
+        print "file size is: " + str(file_size)
+        response = HttpResponse(fsock)
+        response['Content-Disposition'] = 'attachment; filename=' + file_name
+    except IOError:
+        response = HttpResponseNotFound('boom')
+    return response
 
