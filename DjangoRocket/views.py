@@ -43,8 +43,6 @@ def files(request):
     try:
         file_path = 'files/' + file_url
         fsock = open(file_path,"r")
-        #file = fsock.read()
-        #fsock = open(file_path,"r").read()
         file_name = os.path.basename(file_path)
         file_size = os.path.getsize(file_path)
         print "file size is: " + str(file_size)
