@@ -40,7 +40,6 @@
     //Ajax calls
     function moveTurret(direction, duration) {
         var data = {'direction': direction, 'magnitude': duration};
-        console.log(data);
         $.get('/move', data, function (returndata) {
             console.log(returndata);
         });
@@ -122,17 +121,15 @@
 
 
     function captureNewImage() {
-        $.get('http://nerfgun:8090/takeshot.php', data, function (returndata) {
-            console.log(returndata);
+        $.get('http://nerfgun:8090/takeshot.php',function (returndata) {
+            //console.log(returndata);
         });
     }
 
-    function reloadImage() {
-       //captureNewImage();
-        document.getElementById('webcamImage').setAttribute('src', 'http://nerfgun:8090/takeshot.php');
-
+ function reloadImage() {
+        captureNewImage();
+        document.getElementById('webcamImage').setAttribute('src', 'http://nerfgun:8090/shot.jpeg?t=' + Date.now());
     }
-
 </script>
 <script>
     //Gamepad support
