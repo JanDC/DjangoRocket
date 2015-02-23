@@ -40,6 +40,7 @@
     //Ajax calls
     function moveTurret(direction, duration) {
         var data = {'direction': direction, 'magnitude': duration};
+        console.log(data);
         $.get('/move', data, function (returndata) {
             console.log(returndata);
         });
@@ -72,6 +73,7 @@
 <script>
     var duration = 50;//in ms: move duration + cooldown period
     var lastShot = 0;
+    var locked = false;
     //Button controls
     $('.btn_move').click(function () {
         moveTurret(this.value, 10);
@@ -92,7 +94,6 @@
         if (event.timeStamp > (lastShot + duration)) {
             lastShot = event.timeStamp;
             //let the turret cool down
-            reloadImage();
             switch (event.keyCode) {
                 case 32:
                     fireTurret(1);
@@ -116,20 +117,26 @@
                     console.log(event.keyCode);
                     break;
             }
+            reloadImage();
         }
     });
 
 
     function captureNewImage() {
-        $.get('http://nerfgun:8090/takeshot.php',function (returndata) {
-            //console.log(returndata);
+	$.ajax({
+        url: 'http://nerfgun:8090/takeshot.php',
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
         });
     }
 
- function reloadImage() {
+    function reloadImage() {
         captureNewImage();
         document.getElementById('webcamImage').setAttribute('src', 'http://nerfgun:8090/shot.jpeg?t=' + Date.now());
     }
+
 </script>
 <script>
     //Gamepad support
