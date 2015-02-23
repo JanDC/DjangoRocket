@@ -18,13 +18,7 @@
     <tr>
         <td><input type="button" class="btn_move" id="btn_left" value="LEFT"/></td>
         <td>
-            <object width="320" height="240" type="application/x-shockwave-flash"
-                    data="/files">
-                <param name="movie" value="/files"/>
-                <param name="allowfullscreen" value="true"/>
-                <param name="flashvars"
-                       value="config={'clip': {'url': 'http://nerfgun:8090/test.avi', 'autoPlay':true, 'autoBuffering':true}}"/>
-            </object>
+            <img id="webcamImage" src='http://nerfgun:8090/shot.jpeg'/>
         </td>
         <td><input type="button" class="btn_move" id="btn_right" value="RIGHT"/></td>
     </tr>
@@ -95,10 +89,11 @@
     //Keyboard controls
     $(document).keypress(function (event) {
         event.preventDefault;
+
         if (event.timeStamp > (lastShot + duration)) {
             lastShot = event.timeStamp;
             //let the turret cool down
-
+            reloadImage();
             switch (event.keyCode) {
                 case 32:
                     fireTurret(1);
@@ -121,10 +116,23 @@
                 default :
                     console.log(event.keyCode);
                     break;
-
             }
         }
     });
+
+
+    function captureNewImage() {
+        $.get('http://nerfgun:8090/takeshot.php', data, function (returndata) {
+            console.log(returndata);
+        });
+    }
+
+    function reloadImage() {
+       //captureNewImage();
+        document.getElementById('webcamImage').setAttribute('src', 'http://nerfgun:8090/takeshot.php');
+
+    }
+
 </script>
 <script>
     //Gamepad support
