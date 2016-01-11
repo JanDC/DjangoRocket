@@ -11,5 +11,5 @@ Dependencies:
 <li>python-django</li>
 <li>pyusb</li>
 <li>chrome (for gamepad support)</li>
-<li>Libav / ffmpeg (for webcam support)</li>
+<li>Libav / ffmpeg (for webcam support) [note: webcam is broken, will be returning soon]</li>
 </ul>
