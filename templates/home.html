@@ -18,7 +18,7 @@
     <tr>
         <td><input type="button" class="btn_move" id="btn_left" value="LEFT"/></td>
         <td>
-            <img id="webcamImage" src='http://nerfgun:8090/shot.jpeg'/>
+            &nbsp;
         </td>
         <td><input type="button" class="btn_move" id="btn_right" value="RIGHT"/></td>
     </tr>
@@ -68,7 +68,6 @@
         });
     }
 
-
 </script>
 <script>
     var duration = 50;//in ms: move duration + cooldown period
@@ -117,25 +116,8 @@
                     console.log(event.keyCode);
                     break;
             }
-            reloadImage();
         }
     });
-
-
-    function captureNewImage() {
-	$.ajax({
-        url: 'http://nerfgun:8090/takeshot.php',
-        type: 'GET',
-        async: false,
-        cache: false,
-        timeout: 30000,
-        });
-    }
-
-    function reloadImage() {
-        captureNewImage();
-        document.getElementById('webcamImage').setAttribute('src', 'http://nerfgun:8090/shot.jpeg?t=' + Date.now());
-    }
 
 </script>
 <script>
@@ -214,8 +196,6 @@
                 }
             }, interval);
         }
-
     });
-
 </script>
 </html>
