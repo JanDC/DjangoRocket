@@ -7,7 +7,7 @@ from Webcam import Webcam
 def home(request):
     template = loader.get_template('home.html')
     context = RequestContext(request, {'image': 'sdfsdf'})
-    return HttpResponse(template._render(context))
+    return HttpResponse(template.render(context))
 
 def move(request):
     rocket = Rocket()
