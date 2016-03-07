@@ -40,31 +40,25 @@
     //Ajax calls
     function moveTurret(direction, duration) {
         var data = {'direction': direction, 'magnitude': duration};
-        console.log(data);
         $.get('/move', data, function (returndata) {
-            console.log(returndata);
         });
     }
     function fireTurret(numberOfShots) {
         for (var i = 0; i < numberOfShots; i++) {
             $.get('/fire', function (returndata) {
-                console.log(returndata);
             });
         }
     }
     function toggleLaser() {
         $.get('/laser', function (returndata) {
-            console.log(returndata);
-        });
+         });
     }
     function abortAction() {
         $.get('/abort', function (returndata) {
-            console.log(returndata);
-        });
+         });
     }
     function loadUp(duration) {
         $.get('/load', {'duration': duration}, function (returndata) {
-            console.log(returndata);
         });
     }
 
@@ -88,7 +82,7 @@
     });
     //Keyboard controls
     $(document).keypress(function (event) {
-        event.preventDefault;
+        event.preventDefault();
 
         if (event.timeStamp > (lastShot + duration)) {
             lastShot = event.timeStamp;
@@ -113,7 +107,6 @@
                     break;
 
                 default :
-                    console.log(event.keyCode);
                     break;
             }
         }
@@ -136,12 +129,10 @@
 
         for (var i = 0; i < gp.buttons.length; i++) {
             if (gp.buttons[i].pressed) {
-                console.log(i + "pressed");
             }
         }
         if (gp.buttons[4].pressed) {
-            console.log("FIRE!");
-            fireTurret(1);
+           fireTurret(1);
         }
 
 
@@ -149,20 +140,16 @@
             var X = gp.axes[i];
             var Y = gp.axes[i + 1];
             if (X == -1) {
-                console.log('LEFT');
                 moveTurret('LEFT', duration);
             }
             if (X == 1) {
-                console.log('RIGHT');
                 moveTurret('RIGHT', duration);
             }
             if (Y == -1) {
                 moveTurret('UP', duration);
-                console.log('UP');
-            }
+              }
             if (Y == 1) {
                 moveTurret('DOWN', duration);
-                console.log('DOWN');
             }
         }
     }
@@ -177,19 +164,16 @@
             $(window).on("gamepadconnected", function () {
                 hasGP = true;
                 $("#gamepadPrompt").html("Gamepad connected!");
-                console.log("connection event");
                 repGP = window.setInterval(gamepadControls, interval);
             });
 
             $(window).on("gamepaddisconnected", function () {
-                console.log("disconnection event");
                 $("#gamepadPrompt").text(prompt);
                 window.clearInterval(repGP);
             });
 
             //setup an interval for Chrome
             var checkGP = window.setInterval(function () {
-                console.log('checkGP');
                 if (navigator.getGamepads()[0]) {
                     if (!hasGP) $(window).trigger("gamepadconnected");
                     window.clearInterval(checkGP);
