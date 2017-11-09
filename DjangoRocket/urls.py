@@ -1,4 +1,5 @@
 from django.conf.urls import include, url
+from DjangoRocket.views import *
 
 # from django.contrib import admin
 # admin.autodiscover()
@@ -6,10 +7,10 @@ from django.conf.urls import include, url
 urlpatterns = [
     # Examples:
     # url(r'^blog/', include('blog.urls')),
-     url(r'^fire', 'DjangoRocket.views.fire', name='fire'),
-     url(r'^move', 'DjangoRocket.views.move', name='move'),
-     url(r'^abort', 'DjangoRocket.views.abort', name='abort'),
-     url(r'^load', 'DjangoRocket.views.loadUp', name='load'),
-     url(r'^files', 'DjangoRocket.views.files', name='files'),
-     url(r'^$', 'DjangoRocket.views.home', name='home'),
+    url(r'^fire', fire, [], 'fire'),
+    url(r'^move', move, [], 'move'),
+    url(r'^abort', abort, [], 'abort'),
+    url(r'^load', loadUp, [], 'load'),
+    url(r'^files', files, [], 'files'),
+    url(r'^$', home, [], 'home'),
 ]
